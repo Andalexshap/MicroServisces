@@ -1,15 +1,7 @@
-using MessageApi.Services;
-using MessageApi.Controller;
-using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
-using Moq;
-using MessageApi.Mapper;
-using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using WebApiLibrary;
 using System.Security.Cryptography;
 using System.Text;
 using WebApiLibrary.DataStore.Entities;
-using WebApiLibrary.DataStore.Models;
 
 namespace UserServiceTests
 {
