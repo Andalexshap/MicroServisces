@@ -2,6 +2,7 @@ using System.Security.Cryptography;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
 using WebApiLibrary.DataStore.Entities;
+using WebApiLibrary.Util;
 
 namespace UserServiceTests
 {
@@ -87,5 +88,30 @@ namespace UserServiceTests
             var password = shaM.ComputeHash(data);
             CollectionAssert.AreNotEqual(Encoding.UTF8.GetBytes("232"), password);
         }
+
+        [Test]
+        public void CheckPasswordWrong()
+        {
+            Assert.IsTrue(!Helper.CheckPassword("12354"));
+        }
+
+        [Test]
+        public void CheckPasswordSuccess()
+        {
+            Assert.IsTrue(Helper.CheckPassword("Q2w3e4r5"));
+        }
+
+        [Test]
+        public void CheckEmailWrong()
+        {
+            Assert.IsTrue(!Helper.CheckEmail("shlyapa.ru"));
+        }
+
+        [Test]
+        public void CheckEmailSuccess()
+        {
+            Assert.IsTrue(Helper.CheckEmail("shlyapa@mail.ru"));
+        }
+
     }
 }

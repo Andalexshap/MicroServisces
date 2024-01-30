@@ -19,9 +19,9 @@ namespace WebApiLibrary
          dotnet ef migrations add InitialCreate --context AppDbContext
          dotnet ef database update
         */
-        public DbSet<MessageEntity> Messages { get; set; }
-        public DbSet<UserEntity> Users { get; set; }
-        public DbSet<RoleEntity> Roles { get; set; }
+        public virtual DbSet<MessageEntity> Messages { get; set; }
+        public virtual DbSet<UserEntity> Users { get; set; }
+        public virtual DbSet<RoleEntity> Roles { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder.UseNpgsql(_connectionString);

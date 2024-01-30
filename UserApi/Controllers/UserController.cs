@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel;
 using System.IdentityModel.Tokens.Jwt;
-using System.Net.Mail;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -9,6 +8,7 @@ using WebApiLibrary;
 using WebApiLibrary.Abstraction;
 using WebApiLibrary.DataStore.Models;
 using WebApiLibrary.rsa;
+using WebApiLibrary.Util;
 
 namespace UserApi.Controllers
 {
@@ -33,7 +33,7 @@ namespace UserApi.Controllers
         [HttpPost("login")]
         public ActionResult Login([Description("Аутентификация пользователя"), FromBody] LoginModel model)
         {
-            if (!IsValid(model.Email))
+            if (!Helper.CheckEmail(model.Email))
                 return BadRequest($"Email:'{model.Email}' - Invalid Format");
 
             if (_account.GetAccessToken() != null)
@@ -52,8 +52,10 @@ namespace UserApi.Controllers
         [HttpPost("add")]
         public ActionResult AddUser(RegistrationModel model)
         {
-            if (!IsValid(model.Email))
+            if (!Helper.CheckEmail(model.Email))
                 return BadRequest($"Email:'{model.Email}' - Invalid Format");
+            if (!Helper.CheckPassword(model.Password))
+                return BadRequest($"Password:'{model.Password}' - Invalid Format");
 
             var response = _userService.AddUser(model);
             if (!response.IsSuccess)
@@ -66,8 +68,10 @@ namespace UserApi.Controllers
         [HttpPost("add_admin")]
         public ActionResult AddAdmin(RegistrationModel model)
         {
-            if (!IsValid(model.Email))
+            if (!Helper.CheckEmail(model.Email))
                 return BadRequest($"Email:'{model.Email}' - Invalid Format");
+            if (!Helper.CheckPassword(model.Password))
+                return BadRequest($"Password:'{model.Password}' - Invalid Format");
 
             var response = _userService.AddAdmin(model);
             if (!response.IsSuccess)
@@ -133,20 +137,6 @@ namespace UserApi.Controllers
                 expires: DateTime.Now.AddMinutes(60),
                 signingCredentials: credential);
             return new JwtSecurityTokenHandler().WriteToken(token);
-        }
-
-        private bool IsValid(string emailaddress)
-        {
-            try
-            {
-                MailAddress m = new MailAddress(emailaddress);
-
-                return true;
-            }
-            catch (FormatException)
-            {
-                return false;
-            }
         }
     }
 }
