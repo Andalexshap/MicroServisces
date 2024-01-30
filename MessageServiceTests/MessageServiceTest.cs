@@ -1,17 +1,15 @@
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using System.Diagnostics.CodeAnalysis;
-using System.Text;
 using WebApiLibrary;
 using WebApiLibrary.DataStore.Entities;
 using Moq;
-using MessageApi.Services;
 using WebApiLibrary.DataStore.Models;
+using MessageApi.Services;
 
 namespace MessageServiceTests
 {
-    public class Tests
-    {     
+    public class MessageServiceTest
+    {
         private static AppDbContext AppDbContextCreator()
         {
             var options = new DbContextOptionsBuilder<AppDbContext>()
@@ -22,7 +20,7 @@ namespace MessageServiceTests
         [Test]
         public void GetNewMessages_ReturnsMessagesAndMarksAsRead()
         {
-           
+
             var options = new DbContextOptionsBuilder<AppDbContext>()
                 .UseInMemoryDatabase(databaseName: "Final")
                 .Options;
@@ -44,17 +42,17 @@ namespace MessageServiceTests
 
             using (var context = new AppDbContext(options.ToString()))
             {
-                var mapperMock = new Mock<Mapper>(); 
+                var mapperMock = new Mock<Mapper>();
                 var messageService = new MessageService(AppDbContextCreator, mapperMock.Object);
 
                 var result = messageService.GetNewMessages("test@example.com");
 
-               
+
                 Assert.IsTrue(result.IsSuccess);
                 Assert.IsNotNull(result.Messages);
                 Assert.AreEqual(2, result.Messages.Count);
 
-                
+
                 foreach (var messageEntity in context.Messages)
                 {
                     Assert.IsTrue(messageEntity.IsRead);
@@ -85,7 +83,7 @@ namespace MessageServiceTests
 
             Assert.AreEqual(1, context.Messages.Count());
 
-            
+
         }
     }
 }
