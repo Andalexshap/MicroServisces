@@ -50,7 +50,7 @@ namespace MessageApi.Services
             {
                 var messge = _mapper.Map<MessageEntity>(model);
                 context.Messages.Add(messge);
-                context.SaveChangesAsync();
+                context.SaveChanges();
 
                 response.Messages.Add(model);
                 response.IsSuccess = true;
