@@ -22,7 +22,7 @@ namespace MessageApi.Controller
         }
 
         [Authorize(Roles = "Administrator")]
-        [HttpGet]
+        [HttpGet("get")]
         public ActionResult GetNewMessage()
         {
             var senderEmail = GetUserEmailFromToken().GetAwaiter().GetResult();
@@ -34,7 +34,7 @@ namespace MessageApi.Controller
             return Ok(response.Messages);
         }
         [Authorize(Roles = "Administrator")]
-        [HttpPost]
+        [HttpPost("send")]
         public ActionResult SendMessage(string recipientEmail, string text)
         {
             var senderEmail = GetUserEmailFromToken().GetAwaiter().GetResult();

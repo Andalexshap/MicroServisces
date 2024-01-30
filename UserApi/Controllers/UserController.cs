@@ -77,7 +77,7 @@ namespace UserApi.Controllers
         }
 
         [Authorize(Roles = "Administrator")]
-        [HttpGet]
+        [HttpGet("many")]
         public ActionResult GetUsers()
         {
             var response = _userService.GetUsers();
@@ -88,7 +88,7 @@ namespace UserApi.Controllers
         }
 
         [Authorize(Roles = "Administrator")]
-        [HttpPost]
+        [HttpPost("one")]
         public ActionResult GetUser(Guid? userId, string? email)
         {
             var response = _userService.GetUser(userId, email);
@@ -99,7 +99,7 @@ namespace UserApi.Controllers
         }
 
         [Authorize(Roles = "Administrator")]
-        [HttpDelete]
+        [HttpDelete("delete")]
         public ActionResult DeleteUser(Guid? userId, string? email)
         {
             var response = _userService.DeleteUser(userId, email);
