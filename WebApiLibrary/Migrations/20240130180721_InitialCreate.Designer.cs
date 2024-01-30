@@ -12,7 +12,7 @@ using WebApiLibrary;
 namespace WebApiLibrary.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240130090648_InitialCreate")]
+    [Migration("20240130180721_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -50,11 +50,9 @@ namespace WebApiLibrary.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RecipientId")
-                        .IsUnique();
+                    b.HasIndex("RecipientId");
 
-                    b.HasIndex("SenderId")
-                        .IsUnique();
+                    b.HasIndex("SenderId");
 
                     b.ToTable("Messages");
                 });

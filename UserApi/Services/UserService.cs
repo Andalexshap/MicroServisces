@@ -87,7 +87,7 @@ namespace UserApi.Services
 
                 response.UserId = entity.Id;
             }
-            return response;            
+            return response;
         }
 
 

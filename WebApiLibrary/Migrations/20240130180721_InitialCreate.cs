@@ -77,14 +77,12 @@ namespace WebApiLibrary.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Messages_RecipientId",
                 table: "Messages",
-                column: "RecipientId",
-                unique: true);
+                column: "RecipientId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Messages_SenderId",
                 table: "Messages",
-                column: "SenderId",
-                unique: true);
+                column: "SenderId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_Email",

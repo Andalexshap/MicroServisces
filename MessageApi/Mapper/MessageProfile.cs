@@ -9,7 +9,7 @@ namespace MessageApi.Mapper
         public MessageProfile()
         {
             CreateMap<MessageEntity, MessageModel>().ConvertUsing(new EntityToModelConverter());
-            
+
         }
         private class EntityToModelConverter : ITypeConverter<MessageEntity, MessageModel>
         {

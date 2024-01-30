@@ -50,8 +50,8 @@ namespace WebApiLibrary
             modelBuilder.Entity<MessageEntity>(entity =>
             {
                 entity.HasKey(x => x.Id);
-                entity.HasIndex(x => x.SenderId).IsUnique();
-                entity.HasIndex(x => x.RecipientId).IsUnique();
+                entity.Property(x => x.SenderId);
+                entity.Property(x => x.RecipientId);
 
                 entity.Property(e => e.Text)
                     .HasMaxLength(1000);

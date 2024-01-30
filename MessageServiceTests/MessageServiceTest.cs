@@ -1,10 +1,10 @@
 using AutoMapper;
+using MessageApi.Services;
 using Microsoft.EntityFrameworkCore;
+using Moq;
 using WebApiLibrary;
 using WebApiLibrary.DataStore.Entities;
-using Moq;
 using WebApiLibrary.DataStore.Models;
-using MessageApi.Services;
 
 namespace MessageServiceTests
 {
@@ -25,7 +25,7 @@ namespace MessageServiceTests
                 .UseInMemoryDatabase(databaseName: "Final")
                 .Options;
 
-            using (var context = new AppDbContext(options.ToString()))
+            using (var context = new AppDbContext(options.ToString()!))
             {
                 var recipientEmail = "test@example.com";
                 var userEntity = new UserEntity { Email = recipientEmail };

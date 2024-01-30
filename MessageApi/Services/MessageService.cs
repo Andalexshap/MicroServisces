@@ -28,7 +28,7 @@ namespace MessageApi.Services
                     .Include(x => x.Recipient)
                     .Include(x => x.Sender)
                     .Where(x => x.Recipient.Email == recipientEmail && !x.IsRead).ToList();
-                
+
                 foreach (var message in messages)
                 {
                     message.IsRead = true;
@@ -48,11 +48,29 @@ namespace MessageApi.Services
             var response = new MessageResponse();
             using (var context = _context())
             {
-                var messge = _mapper.Map<MessageEntity>(model);
-                context.Messages.Add(messge);
+                var sender = context.Users.AsNoTracking().FirstOrDefault(x => x.Email == model.SenderEmail);
+                var recipient = context.Users.AsNoTracking().FirstOrDefault(x => x.Email == model.RecipientEmail);
+                if (sender == null || recipient == null)
+                {
+                    response.IsSuccess = false;
+                    response.Errors.Add(new ErrorModel { Message = "Один из учатников не найден!" });
+                    return response;
+                }
+
+                var message = new MessageEntity
+                {
+                    Id = Guid.NewGuid(),
+                    CreatedAt = DateTime.UtcNow,
+                    IsRead = false,
+                    RecipientId = recipient.Id,
+                    SenderId = sender.Id,
+                    Text = model.Text
+                };
+
+                context.Messages.Add(message);
                 context.SaveChanges();
 
-                response.Messages.Add(model);
+                response.Messages.Add(_mapper.Map<MessageModel>(message));
                 response.IsSuccess = true;
             }
             return response;

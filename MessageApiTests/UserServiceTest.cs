@@ -1,6 +1,6 @@
-using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
 using WebApiLibrary.DataStore.Entities;
 
 namespace UserServiceTests

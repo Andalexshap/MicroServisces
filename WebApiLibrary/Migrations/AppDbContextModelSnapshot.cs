@@ -47,11 +47,9 @@ namespace WebApiLibrary.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RecipientId")
-                        .IsUnique();
+                    b.HasIndex("RecipientId");
 
-                    b.HasIndex("SenderId")
-                        .IsUnique();
+                    b.HasIndex("SenderId");
 
                     b.ToTable("Messages");
                 });

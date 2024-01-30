@@ -21,7 +21,7 @@ namespace MessageApi.Controller
             _messageService = messageService;
         }
 
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = "Administrator, User")]
         [HttpGet("get")]
         public ActionResult GetNewMessage()
         {
@@ -59,10 +59,10 @@ namespace MessageApi.Controller
 
             var handler = new JwtSecurityTokenHandler();
             var jwtToken = handler.ReadToken(token) as JwtSecurityToken;
-            var claim = jwtToken!.Claims.Single(x => x.Type == "Email");
+            var claim = jwtToken!.Claims.Single(x => x.Type.Contains("emailaddress"));
 
             return claim.Value;
-            
+
         }
     }
 }
