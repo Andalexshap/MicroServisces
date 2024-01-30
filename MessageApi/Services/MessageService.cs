@@ -70,7 +70,13 @@ namespace MessageApi.Services
                 context.Messages.Add(message);
                 context.SaveChanges();
 
-                response.Messages.Add(_mapper.Map<MessageModel>(message));
+                var entity = context.Messages
+                    .Include(x => x.Recipient)
+                    .Include(x => x.Sender)
+                    .AsNoTracking()
+                    .FirstOrDefault(x => x.Id == message.Id);
+
+                response.Messages.Add(_mapper.Map<MessageModel>(entity));
                 response.IsSuccess = true;
             }
             return response;
