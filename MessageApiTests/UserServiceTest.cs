@@ -11,10 +11,10 @@ using System.Text;
 using WebApiLibrary.DataStore.Entities;
 using WebApiLibrary.DataStore.Models;
 
-namespace MessageApiTests
+namespace UserServiceTests
 {
     [TestFixture]
-    public class YourClassTests
+    public class UserServiceTest
     {
         [Test]
         public void CheckPasswordTest()
